@@ -1830,9 +1830,25 @@ if (header) {
 const iconMenu = document.querySelector('.header-top__burger');
 const headerBody = document.querySelector('.header-menu__body');
 
+const iconMenu2 = document.querySelector('.header-menu-services__button');
+const headerBody2 = document.querySelector('.header-menu-services__dropdown');
+
+function closeFirstMenu() {
+  document.documentElement.classList.remove("menu-open");
+}
+
+function closeSecondMenu() {
+  document.documentElement.classList.remove("service-open");
+}
+
 if (iconMenu) {
   iconMenu.addEventListener("click", function (e) {
     e.stopPropagation();
+
+    const isServiceOpen = document.documentElement.classList.contains("service-open");
+    if (isServiceOpen) {
+      closeSecondMenu();
+    }
 
     document.documentElement.classList.toggle("menu-open");
   });
@@ -1842,7 +1858,29 @@ if (iconMenu) {
     const isClickOnMenuIcon = e.target === iconMenu || iconMenu.contains(e.target);
 
     if (!isClickInsideHeaderBody && !isClickOnMenuIcon) {
-      document.documentElement.classList.remove("menu-open");
+      closeFirstMenu();
+    }
+  });
+}
+
+if (iconMenu2) {
+  iconMenu2.addEventListener("click", function (e) {
+    e.stopPropagation();
+
+    const isMenuOpen = document.documentElement.classList.contains("menu-open");
+    if (isMenuOpen) {
+      closeFirstMenu();
+    }
+
+    document.documentElement.classList.toggle("service-open");
+  });
+
+  document.addEventListener('click', function (e) {
+    const isClickInsideHeaderBody = headerBody2 && headerBody2.contains(e.target);
+    const isClickOnMenuIcon = e.target === iconMenu2 || iconMenu2.contains(e.target);
+
+    if (!isClickInsideHeaderBody && !isClickOnMenuIcon) {
+      closeSecondMenu();
     }
   });
 }
