@@ -11,10 +11,216 @@
         {% include 'blocks/header.njk' %}
         <main class="main">
 
+            <div class="block-main block-main-contacts">
+                <img src="img/bg1.webp" alt="" class="block-main__bg">
+                <div class="container">
+                    <h1 class="title1">Контакты</h1>
+                </div>
+            </div>
+
+            <div class="block-contacts">
+                <div class="container">
+                    <div class="block-contacts__content">
+                        <div class="block-contacts-top">
+                            <svg class="block-contacts-top__svg" width="1610" height="579" viewBox="0 0 1610 579"
+                                fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g filter="url(#filter0_d_122_752)">
+                                    <path
+                                        d="M80 238.483C80 205.346 106.863 178.483 140 178.483H694.745C706.333 178.483 717.674 175.127 727.396 168.821L772.349 139.662C792.21 126.779 817.79 126.779 837.651 139.662L882.604 168.821C892.326 175.127 903.667 178.483 915.255 178.483H1470C1503.14 178.483 1530 205.346 1530 238.483V548.483H80L80 238.483Z"
+                                        fill="white" />
+                                </g>
+                                <defs>
+                                    <filter id="filter0_d_122_752" x="0" y="0" width="1610" height="578.483"
+                                        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                                        <feColorMatrix in="SourceAlpha" type="matrix"
+                                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                                        <feOffset dy="-50" />
+                                        <feGaussianBlur stdDeviation="40" />
+                                        <feComposite in2="hardAlpha" operator="out" />
+                                        <feColorMatrix type="matrix"
+                                            values="0 0 0 0 0.175773 0 0 0 0 0.264731 0 0 0 0 0.299679 0 0 0 0.12 0" />
+                                        <feBlend mode="normal" in2="BackgroundImageFix"
+                                            result="effect1_dropShadow_122_752" />
+                                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_122_752"
+                                            result="shape" />
+                                    </filter>
+                                </defs>
+                            </svg>
+                            <div class="block-contacts-top__body">
+                                <div class="block-contacts-top__column">
+                                    <div class="block-contacts-top__icon">
+                                        <svg aria-hidden="true" width="36" height="36">
+                                            <use xlink:href="img/sprite.svg#phone"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="block-contacts-top__item">
+                                        <div class="block-contacts-top__title">Телефон</div>
+                                        <a href="./" class="block-contacts-top__subtitle link phone">
+                                            +7 988 <strong>250-04-08</strong>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="block-contacts-top__column">
+                                    <div class="block-contacts-top__icon">
+                                        <svg aria-hidden="true" width="33" height="27">
+                                            <use xlink:href="img/sprite.svg#mail"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="block-contacts-top__item">
+                                        <div class="block-contacts-top__title">email</div>
+                                        <a href="mailto:support@sellagency.ru"
+                                            class="block-contacts-top__subtitle link">
+                                            support@sellagency.ru
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="block-contacts-top__column">
+                                    <div class="block-contacts-top__icon">
+                                        <svg aria-hidden="true" width="33" height="33">
+                                            <use xlink:href="img/sprite.svg#time"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="block-contacts-top__item">
+                                        <div class="block-contacts-top__title">График работы</div>
+                                        <div class="block-contacts-top__subtitle">
+                                            Пн-Вс: <strong>с 9-00</strong> до <strong>18-00</strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="block-contacts-top__column">
+                                    <div class="block-contacts-top__icon">
+                                        <svg aria-hidden="true" width="30" height="35">
+                                            <use xlink:href="img/sprite.svg#map"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="block-contacts-top__item">
+                                        <div class="block-contacts-top__title">Адрес</div>
+                                        <div class="block-contacts-top__subtitle">
+                                            г. Москва, Красносельская нижн. ул., д. 35, стр. 64, офис 305, Бизнес-центр
+                                            «Виктория плаза»
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="block-contacts-top__column">
+                                    <div class="block-contacts-top__icon">
+                                        <svg aria-hidden="true" width="36" height="36">
+                                            <use xlink:href="img/sprite.svg#socials"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="block-contacts-top__item">
+                                        <div class="block-contacts-top__title">Мы в соцсетях</div>
+                                        <div class="socials">
+                                            <a href="./">
+                                                <img loading="lazy" src="img/icons/tg.svg" alt="">
+                                            </a>
+                                            <a href="./">
+                                                <img loading="lazy" src="img/icons/wh.svg" alt="">
+                                            </a>
+                                            <a href="./">
+                                                <img loading="lazy" src="img/icons/vk.svg" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="map" class="block-contacts__map"></div>
+                        <div class="block-contacts-bottom">
+                            <svg class="block-contacts-bottom__svg" width="1450" height="474"
+                                viewBox="0 0 1450 474" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M2.12458e-10 365C2.31746e-10 398.137 26.8629 425 60 425H614.745C626.333 425 637.674 428.356 647.396 434.662L692.349 463.821C712.21 476.704 737.79 476.704 757.651 463.821L802.604 434.662C812.326 428.356 823.667 425 835.255 425H1390C1423.14 425 1450 398.137 1450 365V60C1450 26.8629 1423.14 0 1390 0H60C26.8629 0 0 26.8629 0 60L2.12458e-10 365Z"
+                                    fill="#F7F7F7" />
+                            </svg>
+                            <div class="block-contacts-bottom__body">
+                                <div class="block-contacts-bottom__title">
+                                    Реквизиты
+                                </div>
+                                <ul>
+                                    <li>ИП Самончик Наталья Дмитриевна</li>
+                                    <li>ИНН: 650623380052</li>
+                                    <li>ОГРНИП: 323270000054040</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="block-forms block-forms-contacts">
+                <img src="img/bg4.webp" alt="" class="block-forms__bg1">
+                <div class="container">
+                    <div class="block-forms__content">
+                        <form action="#" class="form">
+                            <div class="form__top">
+                                <h2 class="title2 white">
+                                    Остались вопросы?
+                                </h2>
+                                <p>
+                                    Напишите нам интересующие вас вопросы и наш менеджер
+                                    вам ответит в первую свободную минуту
+                                </p>
+                            </div>
+                            <div class="form__inputs">
+                                <div class="form__input">
+                                    <div class="form__icon">
+                                        <svg aria-hidden="true" width="10" height="11">
+                                            <use xlink:href="img/sprite.svg#user"></use>
+                                        </svg>
+                                    </div>
+                                    <input data-required autocomplete="off" type="text" name="form[]"
+                                        placeholder="Ваше имя" class="input">
+                                </div>
+                                <div class="form__input">
+                                    <div class="form__icon">
+                                        <svg aria-hidden="true" width="12" height="12">
+                                            <use xlink:href="img/sprite.svg#phone"></use>
+                                        </svg>
+                                    </div>
+                                    <input data-required autocomplete="off" type="text" name="form[]"
+                                        placeholder="Телефон" class="input telephone">
+                                </div>
+                                <div class="form__input form-long">
+                                    <div class="form__icon">
+                                        <svg aria-hidden="true" width="11" height="9">
+                                            <use xlink:href="img/sprite.svg#mail"></use>
+                                        </svg>
+                                    </div>
+                                    <input data-required="email" autocomplete="off" type="text" name="form[]"
+                                        placeholder="Email" class="input">
+                                </div>
+                                <div class="form__input form-long form-textarea">
+                                    <div class="form__icon">
+                                        <svg aria-hidden="true" width="14" height="13">
+                                            <use xlink:href="img/sprite.svg#pen"></use>
+                                        </svg>
+                                    </div>
+                                    <textarea placeholder="Ваше сообщение" class="input textarea"></textarea>
+                                </div>
+                            </div>
+                            <div class="form__bottom bottom-row">
+                                <button type="submit" class="btn btn-orange">
+                                    <span>Отправить</span>
+                                </button>
+                                <div class="form__text">
+                                    Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+                                </div>
+                            </div>
+                        </form>
+                        <div class="block-forms__image">
+                            <img loading="lazy" src="img/image23.webp" alt="" class="block-forms__pic1">
+                            <img loading="lazy" src="img/image24.webp" alt="" class="block-forms__pic2">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </main>
         {% include 'blocks/footer.njk' %}
     </div>
+    <script
+        src="https://api-maps.yandex.ru/2.1/?apikey=211aedb8-7658-4cd6-bcc1-134fbf4daa05&lang=ru_RU&_v=20240623012845"></script>
     {% include 'blocks/scripts.njk' %}
 </body>
 
