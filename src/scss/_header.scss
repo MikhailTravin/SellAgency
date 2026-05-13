@@ -56,9 +56,10 @@
 
     &__logo {
         display: flex;
-        flex: 0 0 132px;
+        width: 100%;
         height: auto;
-        width: 132px;
+        max-width: 132px;
+        transition: max-width 0.3s;
         img {
             width: 100%;
             height: auto;
@@ -75,21 +76,20 @@
             }
         }
         @media (max-width: 1300px) {
-            flex: 0 0 100px;
-            width: 100px;
+            max-width: 100px;
         }
         @media (max-width: 992px) {
             width: auto;
             flex: 0 0 auto;
             height: 90px;
+            max-width: fit-content;
             img {
                 height: 100%;
                 width: auto;
             }
         }
         @media (max-width: 359px) {
-            flex: 0 0 70px;
-            width: 70px;
+            max-width: 70px;
             height: auto;
             img {
                 width: 100%;

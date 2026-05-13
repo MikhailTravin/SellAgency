@@ -443,6 +443,75 @@ $starActive: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZp
         }
     }
 }
+.form-rating {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    @media (max-width: 768px) {
+        gap: 20px;
+    }
+    // .form-rating__title
+
+    &__title {
+        font-weight: 700;
+        font-size: 28px;
+        line-height: 129%;
+        text-align: center;
+        @media (max-width: 768px) {
+            font-size: 20px;
+        }
+    }
+
+    // .form-rating__body
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 45px 60px 24px 50px;
+        background: #f7f7f7;
+        margin: 0px -50px;
+        width: calc(100% + 110px);
+        @media (max-width: 650px) {
+            gap: 5px;
+            margin: 0px -20px;
+            width: calc(100% + 40px);
+            padding: 35px 20px 20px 20px;
+        }
+    }
+
+    // .form-rating__range
+
+    &__range {
+    }
+}
+.range {
+    // .range__values
+
+    &__values {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    // .range__value
+
+    &__value {
+        font-family: var(--second-family);
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 163%;
+        text-transform: uppercase;
+        background: linear-gradient(336deg, #141e1f 0%, #fff 503.85%, #141e1f 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        @media (max-width: 768px) {
+            font-size: 14px;
+        }
+    }
+}
 
 .select {
     min-width: 0;
@@ -509,7 +578,7 @@ $starActive: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZp
             height: 5px;
             background-repeat: no-repeat;
             background-position: center;
-            background-size: contain;
+            background-size: 100% 100%;
         }
     }
 
@@ -540,16 +609,20 @@ $starActive: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZp
         margin: 5px 0px 0px 0px;
         width: 100%;
         left: 0;
+        max-height: 220px;
         border-radius: 10px;
         background: #f7f7f7;
         box-shadow: 0 -15px 30px 0 rgba(45, 68, 76, 0.1);
-        max-height: 220px;
         overflow: auto;
         -ms-overflow-style: none;
         scrollbar-width: none;
         &::-webkit-scrollbar {
             display: none;
         }
+    }
+    // .select__scroll
+    &__scroll {
+        max-height: 100% !important;
     }
     // .select__option
     &__option {
