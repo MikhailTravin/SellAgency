@@ -1884,3 +1884,46 @@ if (iconMenu2) {
     }
   });
 }
+
+//========================================================================================================================================================
+
+//Ползунок
+function rangeInit() {
+  const ratingFilter = document.querySelector('.form-rating__range');
+  if (ratingFilter) {
+    const minValueSpan = document.querySelector('.range__value--min');
+    const maxValueSpan = document.querySelector('.range__value--max');
+
+    const minValue = parseInt(minValueSpan.textContent.replace(/[^\d]/g, ''));
+    const maxValue = parseInt(maxValueSpan.textContent.replace(/[^\d]/g, ''));
+
+    const startValue = minValue + Math.floor((maxValue - minValue) / 2);
+
+    noUiSlider.create(ratingFilter, {
+      start: [startValue],
+      connect: [true, false],
+      range: {
+        'min': minValue,
+        'max': maxValue
+      },
+      tooltips: [true],
+      format: wNumb({
+        decimals: 0,
+        thousand: ' ',
+        suffix: ' ₽'
+      })
+    });
+
+    // Обновляем левое значение при движении
+    /*
+    ratingFilter.noUiSlider.on('update', function (values) {
+      minValueSpan.textContent = values[0];
+    });*/
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', rangeInit);
+} else {
+  rangeInit();
+}

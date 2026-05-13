@@ -50,7 +50,7 @@
 											<span>+7 988 <strong>250-04-08</strong></span>
 										</a>
 									</div>
-									<a href="./" class="btn">
+									<a href="./" data-popup="#call" class="btn">
 										<span>Оставить заявку</span>
 									</a>
 									<div class="header-top__burger">
@@ -151,11 +151,11 @@
 									сопровождения
 								</p>
 								<div class="block-intro__buttons">
-									<a href="./" class="btn btn-orange">
+									<a href="./" data-popup="#consultation" class="btn btn-orange">
 										<span>Получить консультацию</span>
 										<img src="img/image2.webp" alt="">
 									</a>
-									<a href="./" class="btn btn-blue">
+									<a href="./" data-popup="#calculate" class="btn btn-blue">
 										<span>Рассчитать стоимость</span>
 										<img src="img/image3.webp" alt="" class="btn-pic1">
 									</a>
@@ -1904,9 +1904,138 @@
 				</div>
 			</footer>
 		</div>
+		<div id="calculate" aria-hidden="true" class="popup popup-forms popup-calculate">
+			<div class="popup__wrapper">
+				<div class="popup__content">
+					<div data-close class="popup__close">
+						<svg aria-hidden="true" width="16" height="16">
+							<use xlink:href="img/sprite.svg#close"></use>
+						</svg>
+					</div>
+					<form action="#" class="form">
+						<div class="form__top">
+							<h2 class="title2">
+								Рассчитать стоимость
+							</h2>
+						</div>
+						<div class="form-rating">
+							<div class="form-rating__title">
+								Планируемый бюджет на рекламу:
+							</div>
+							<div class="form-rating__body">
+								<div class="form-rating__range"></div>
+								<div class="range__values">
+									<span class="range__value range__value--min">10 000 ₽</span>
+									<span class="range__value range__value--max">1 500 000 ₽</span>
+								</div>
+							</div>
+						</div>
+						<div class="form__inputs">
+							<div class="form__input form-long">
+								<select name="form[]" class="select">
+									<option value="" data-show data-label data-label="Выберите Маркетплейс" selected>
+										Выберите Маркетплейс
+									</option>
+									<option value="1">Маркетплейс1</option>
+									<option value="2">Маркетплейс2</option>
+									<option value="3">Маркетплейс3</option>
+									<option value="4">Маркетплейс4</option>
+								</select>
+							</div>
+							<div class="form__input form-long form-textarea">
+								<div class="form__icon">
+									<svg aria-hidden="true" width="14" height="13">
+										<use xlink:href="img/sprite.svg#pen"></use>
+									</svg>
+								</div>
+								<textarea placeholder="Какие товары продаете?" class="input textarea"></textarea>
+							</div>
+							<div class="form__input">
+								<div class="form__icon">
+									<svg aria-hidden="true" width="10" height="11">
+										<use xlink:href="img/sprite.svg#user"></use>
+									</svg>
+								</div>
+								<input data-required autocomplete="off" type="text" name="form[]" placeholder="Ваше имя" class="input">
+							</div>
+							<div class="form__input">
+								<div class="form__icon">
+									<svg aria-hidden="true" width="12" height="12">
+										<use xlink:href="img/sprite.svg#phone"></use>
+									</svg>
+								</div>
+								<input data-required autocomplete="off" type="text" name="form[]" placeholder="Телефон" class="input telephone">
+							</div>
+						</div>
+						<div class="form__bottom bottom-column">
+							<button type="submit" class="btn btn-orange">
+								<span>Получить расчет</span>
+							</button>
+							<div class="form__text">
+								Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div id="consultation" aria-hidden="true" class="popup popup-forms">
+			<div class="popup__wrapper">
+				<div class="popup__content">
+					<div data-close class="popup__close">
+						<svg aria-hidden="true" width="16" height="16">
+							<use xlink:href="img/sprite.svg#close"></use>
+						</svg>
+					</div>
+					<form action="#" class="form">
+						<div class="form__top">
+							<h2 class="title2">
+								Получить консультацию
+							</h2>
+						</div>
+						<div class="form__inputs">
+							<div class="form__input">
+								<div class="form__icon">
+									<svg aria-hidden="true" width="10" height="11">
+										<use xlink:href="img/sprite.svg#user"></use>
+									</svg>
+								</div>
+								<input data-required autocomplete="off" type="text" name="form[]" placeholder="Ваше имя" class="input">
+							</div>
+							<div class="form__input">
+								<div class="form__icon">
+									<svg aria-hidden="true" width="12" height="12">
+										<use xlink:href="img/sprite.svg#phone"></use>
+									</svg>
+								</div>
+								<input data-required autocomplete="off" type="text" name="form[]" placeholder="Телефон" class="input telephone">
+							</div>
+							<div class="form__input form-long form-textarea">
+								<div class="form__icon">
+									<svg aria-hidden="true" width="14" height="13">
+										<use xlink:href="img/sprite.svg#pen"></use>
+									</svg>
+								</div>
+								<textarea placeholder="Сообщение" class="input textarea"></textarea>
+							</div>
+						</div>
+						<div class="form__bottom bottom-column">
+							<button type="submit" class="btn btn-orange">
+								<span>Отправить</span>
+							</button>
+							<div class="form__text">
+								Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 		<script src="js/swiper-8.4.7.min.js"></script>
 		<script src="js/inputmask.min.js"></script>
 		<script src="js/fancybox.umd.js"></script>
+		<script src="js/nouislider.min.js"></script>
+		<script src="js/wNumb.min.js"></script>
 		<script src="js/dynamic_adapt.js"></script>
 		<script src="js/scripts.js"></script>
 	</body>
