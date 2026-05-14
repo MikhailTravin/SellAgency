@@ -130,4 +130,18 @@ body::after {
         border: 2px solid var(--357cdf);
         box-shadow: none;
     }
+    .form__top {
+        p {
+            font-size: 22px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--141e1f);
+            @media (max-width: 650px) {
+                font-size: 18px;
+            }
+        }
+    }
+    .form__bottom.bottom-column .btn {
+        width: fit-content;
+    }
 }
