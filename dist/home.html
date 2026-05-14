@@ -1915,33 +1915,66 @@
 					<form action="#" class="form">
 						<div class="form__top">
 							<h2 class="title2">
-								Рассчитать стоимость
+								Оцените потенциал роста на маркетплейсах
 							</h2>
+							<p>
+								Узнайте, каких результатов можно достичь на маркетплейсах за счет продвижения и оптимизации
+							</p>
+						</div>
+						<div class="form__checkbox-group">
+							<div class="form__checkbox-title">
+								На каких маркетплейсах у вас магазины:
+							</div>
+							<div class="form__checkboxes">
+								<label class="checkbox">
+									<input class="checkbox__input" type="checkbox" value="1" name="form[]">
+									<span class="checkbox__label">
+										<span class="checkbox__icon">
+											<svg aria-hidden="true" width="12" height="18">
+												<use xlink:href="img/sprite.svg#check1"></use>
+											</svg>
+										</span>
+										<span class="checkbox__text">Ozon</span>
+									</span>
+								</label>
+								<label class="checkbox">
+									<input class="checkbox__input" type="checkbox" value="2" name="form[]">
+									<span class="checkbox__label">
+										<span class="checkbox__icon">
+											<svg aria-hidden="true" width="12" height="18">
+												<use xlink:href="img/sprite.svg#check1"></use>
+											</svg>
+										</span>
+										<span class="checkbox__text">Wildberries</span>
+									</span>
+								</label>
+								<label class="checkbox">
+									<input class="checkbox__input" type="checkbox" value="3" name="form[]">
+									<span class="checkbox__label">
+										<span class="checkbox__icon">
+											<svg aria-hidden="true" width="12" height="18">
+												<use xlink:href="img/sprite.svg#check1"></use>
+											</svg>
+										</span>
+										<span class="checkbox__text">Яндекс Маркет</span>
+									</span>
+								</label>
+							</div>
 						</div>
 						<div class="form-rating">
 							<div class="form-rating__title">
-								Планируемый бюджет на рекламу:
+								Какое количество артикулов:
 							</div>
 							<div class="form-rating__body">
 								<div class="form-rating__range"></div>
 								<div class="range__values">
-									<span class="range__value range__value--min">10 000 ₽</span>
-									<span class="range__value range__value--max">1 500 000 ₽</span>
+									<span class="range__value range__value--min">1</span>
+									<span class="range__value range__value--max">1 000</span>
 								</div>
 							</div>
 						</div>
+
 						<div class="form__inputs">
-							<div class="form__input form-long">
-								<select name="form[]" class="select">
-									<option value="" data-show data-label data-label="Выберите Маркетплейс" selected>
-										Выберите Маркетплейс
-									</option>
-									<option value="1">Маркетплейс1</option>
-									<option value="2">Маркетплейс2</option>
-									<option value="3">Маркетплейс3</option>
-									<option value="4">Маркетплейс4</option>
-								</select>
-							</div>
 							<div class="form__input form-long form-textarea">
 								<div class="form__icon">
 									<svg aria-hidden="true" width="14" height="13">
@@ -1950,26 +1983,19 @@
 								</div>
 								<textarea placeholder="Какие товары продаете?" class="input textarea"></textarea>
 							</div>
-							<div class="form__input">
-								<div class="form__icon">
-									<svg aria-hidden="true" width="10" height="11">
-										<use xlink:href="img/sprite.svg#user"></use>
-									</svg>
-								</div>
-								<input data-required autocomplete="off" type="text" name="form[]" placeholder="Ваше имя" class="input">
-							</div>
-							<div class="form__input">
+							<div class="form__input form-long">
 								<div class="form__icon">
 									<svg aria-hidden="true" width="12" height="12">
 										<use xlink:href="img/sprite.svg#phone"></use>
 									</svg>
 								</div>
-								<input data-required autocomplete="off" type="text" name="form[]" placeholder="Телефон" class="input telephone">
+								<input data-required autocomplete="off" type="text" name="phone" placeholder="Номер телефона" class="input telephone">
 							</div>
 						</div>
+
 						<div class="form__bottom bottom-column">
 							<button type="submit" class="btn btn-orange">
-								<span>Получить расчет</span>
+								<span>Оценить потенциал роста</span>
 							</button>
 							<div class="form__text">
 								Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности
