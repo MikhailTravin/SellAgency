@@ -1,5 +1,7 @@
 const modules_flsModules = {};
 
+let isMobile = { Android: function () { return navigator.userAgent.match(/Android/i); }, BlackBerry: function () { return navigator.userAgent.match(/BlackBerry/i); }, iOS: function () { return navigator.userAgent.match(/iPhone|iPad|iPod/i); }, Opera: function () { return navigator.userAgent.match(/Opera Mini/i); }, Windows: function () { return navigator.userAgent.match(/IEMobile/i); }, any: function () { return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows()); } };
+
 let bodyLockStatus = true;
 let bodyUnlock = (delay = 500) => {
   if (bodyLockStatus) {
@@ -694,7 +696,7 @@ class SelectConstructor {
   selectAction(selectItem) {
     const originalSelect = this.getSelectElement(selectItem).originalSelect;
     const selectOptions = this.getSelectElement(selectItem, this.selectClasses.classSelectOptions).selectElement;
-    const selectOpenzIndex = originalSelect.dataset.zIndex ? originalSelect.dataset.zIndex : 3;
+    const selectOpenzIndex = originalSelect.dataset.zIndex;
 
     this.setOptionsPosition(selectItem);
 
@@ -1330,6 +1332,176 @@ if (document.querySelector('.block-reviews__slider')) {
     }, 250);
   });
 }
+
+if (document.querySelector('.block-before-after__slider')) {
+  const swiperBeforeAfter = new Swiper('.block-before-after__slider', {
+    observer: true,
+    observeParents: true,
+    slidesPerView: 1,
+    spaceBetween: 10,
+    speed: 400,
+    navigation: {
+      prevEl: '.block-before-after__arrow-prev',
+      nextEl: '.block-before-after__arrow-next',
+    },
+  });
+}
+
+if (document.querySelector('.page-cases-results__slider')) {
+
+  const swiperCases = new Swiper('.page-cases-results__slider', {
+    observer: true,
+    observeParents: true,
+    slidesPerView: 1,
+    spaceBetween: 10,
+    speed: 400,
+    navigation: {
+      prevEl: '.page-cases-results__arrow-prev',
+      nextEl: '.page-cases-results__arrow-next',
+    },
+    breakpoints: {
+      768: {
+        spaceBetween: 20,
+        slidesPerView: 2.5,
+      }, 
+      992: {
+        spaceBetween: 30,
+        slidesPerView: 2,
+      },
+      1200: {
+        spaceBetween: 50,
+        slidesPerView: 2,
+      },
+    },
+  });
+}
+
+//========================================================================================================================================================
+
+//До-после
+class BeforeAfter {
+  constructor(props) {
+    let defaultConfig = {
+      init: true,
+      logging: true,
+      swiper: null
+    };
+    this.config = Object.assign(defaultConfig, props);
+
+    if (this.config.init) {
+      const beforeAfterItems = document.querySelectorAll('[data-ba]');
+      if (beforeAfterItems.length > 0) {
+        this.beforeAfterInit(beforeAfterItems);
+      }
+    }
+  }
+
+  beforeAfterInit(beforeAfterItems) {
+    beforeAfterItems.forEach(beforeAfter => {
+      if (beforeAfter) {
+        this.beforeAfterClasses(beforeAfter);
+        this.beforeAfterItemInit(beforeAfter);
+      }
+    });
+  }
+
+  beforeAfterClasses(beforeAfter) {
+    beforeAfter.addEventListener('mouseover', function (e) {
+      const targetElement = e.target;
+      if (!targetElement.closest('[data-ba-arrow]')) {
+        if (targetElement.closest('[data-ba-before]')) {
+          beforeAfter.classList.remove('_right');
+          beforeAfter.classList.add('_left');
+        } else {
+          beforeAfter.classList.add('_right');
+          beforeAfter.classList.remove('_left');
+        }
+      }
+    });
+
+    beforeAfter.addEventListener('mouseleave', function () {
+      beforeAfter.classList.remove('_left');
+      beforeAfter.classList.remove('_right');
+    });
+  }
+
+  beforeAfterItemInit(beforeAfter) {
+    const beforeAfterArrow = beforeAfter.querySelector('[data-ba-arrow]');
+    const afterItem = beforeAfter.querySelector('[data-ba-after]');
+
+    if (!beforeAfterArrow || !afterItem) return;
+
+    const beforeAfterArrowWidth = parseFloat(
+      window.getComputedStyle(beforeAfterArrow).getPropertyValue('width')
+    );
+
+    const handler = isMobile.any() ? 'touchstart' : 'mousedown';
+    beforeAfterArrow.addEventListener(handler, (e) => {
+      this.handleDragStart(e, beforeAfter, afterItem, beforeAfterArrowWidth);
+    });
+  }
+
+  handleDragStart(e, beforeAfter, afterItem, arrowWidth) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const swiperInstance = this.config.swiper;
+
+    if (swiperInstance && typeof swiperInstance === 'object') {
+      swiperInstance.allowTouchMove = false;
+    }
+
+    const sizes = {
+      width: beforeAfter.offsetWidth,
+      left: beforeAfter.getBoundingClientRect().left - scrollX
+    };
+
+    const moveHandler = (eMove) => {
+      this.handleMouseMove(eMove, beforeAfter, afterItem, arrowWidth, sizes);
+    };
+
+    const endHandler = () => {
+      document.removeEventListener(isMobile.any() ? 'touchmove' : 'mousemove', moveHandler);
+      if (swiperInstance && typeof swiperInstance === 'object') {
+        swiperInstance.allowTouchMove = true;
+      }
+    };
+
+    if (isMobile.any()) {
+      document.addEventListener('touchmove', moveHandler);
+      document.addEventListener('touchend', endHandler, { once: true });
+    } else {
+      document.addEventListener('mousemove', moveHandler);
+      document.addEventListener('mouseup', endHandler, { once: true });
+    }
+
+    document.addEventListener('dragstart', (eDrag) => {
+      eDrag.preventDefault();
+    }, { once: true });
+  }
+
+  handleMouseMove(e, beforeAfter, afterItem, arrowWidth, sizes) {
+    const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+    const posLeft = clientX - sizes.left;
+
+    if (posLeft >= 0 && posLeft <= sizes.width) {
+      const way = (posLeft / sizes.width) * 100;
+      const arrowLeft = `calc(${way}% - ${arrowWidth}px)`;
+
+      beforeAfter.querySelector('[data-ba-arrow]').style.cssText =
+        `left:${arrowLeft}; transform: translate(50%, -50%);`;
+      afterItem.style.cssText = `width: ${100 - way}%`;
+    } else if (posLeft < 0) {
+      beforeAfter.querySelector('[data-ba-arrow]').style.cssText = `left: 0%`;
+      afterItem.style.cssText = `width: 100%`;
+    } else if (posLeft > sizes.width) {
+      beforeAfter.querySelector('[data-ba-arrow]').style.cssText =
+        `left: calc(100% - ${arrowWidth}px)`;
+      afterItem.style.cssText = `width: 0%`;
+    }
+  }
+}
+modules_flsModules.ba = new BeforeAfter({});
 
 //========================================================================================================================================================
 
