@@ -386,8 +386,8 @@ $starActive: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZp
         font-size: 18px;
         font-weight: 700;
         line-height: 120%;
-        @media (max-width: 650px){
-              font-size: 14px;
+        @media (max-width: 650px) {
+            font-size: 14px;
         }
     }
 
@@ -607,6 +607,9 @@ $starActive: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZp
     min-width: 0;
     position: relative;
     z-index: 30;
+    &._select-open {
+        z-index: 35;
+    }
     // .select__body
     &__body {
         position: relative;
