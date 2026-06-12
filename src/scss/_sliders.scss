@@ -29,6 +29,7 @@
 }
 
 .arrow-prev {
+    cursor: pointer;
     position: absolute;
     top: 50%;
     transform: translate(0px, -50%);
@@ -60,6 +61,7 @@
     }
 }
 .arrow-next {
+    cursor: pointer;
     position: absolute;
     top: 50%;
     transform: translate(0px, -50%);

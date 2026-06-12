@@ -176,6 +176,14 @@ a {
     background-clip: border-box;
     -webkit-background-clip: border-box;
     -webkit-text-fill-color: initial;
+    span {
+      color: transparent;
+      background-clip: text !important;
+      -webkit-background-clip: text !important;
+      -webkit-text-fill-color: transparent !important;
+      background:
+      linear-gradient(30deg, rgba(255, 84, 48, 0) 0%, #ff5430 49.52%, rgba(255, 84, 48, 0) 100%), var(--ff755b-2-paints);
+    }
   }
   @media (max-width: 768px) {
     font-size: 30px;
