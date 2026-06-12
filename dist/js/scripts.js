@@ -1333,20 +1333,6 @@ if (document.querySelector('.block-reviews__slider')) {
   });
 }
 
-if (document.querySelector('.block-before-after__slider')) {
-  const swiperBeforeAfter = new Swiper('.block-before-after__slider', {
-    observer: true,
-    observeParents: true,
-    slidesPerView: 1,
-    spaceBetween: 10,
-    speed: 400,
-    navigation: {
-      prevEl: '.block-before-after__arrow-prev',
-      nextEl: '.block-before-after__arrow-next',
-    },
-  });
-}
-
 if (document.querySelector('.page-cases-results__slider')) {
 
   const swiperCases = new Swiper('.page-cases-results__slider', {
@@ -1363,7 +1349,7 @@ if (document.querySelector('.page-cases-results__slider')) {
       768: {
         spaceBetween: 20,
         slidesPerView: 2.5,
-      }, 
+      },
       992: {
         spaceBetween: 30,
         slidesPerView: 2,
@@ -1376,6 +1362,31 @@ if (document.querySelector('.page-cases-results__slider')) {
   });
 }
 
+if (document.querySelector('.block-tarrif__body')) { // Указываем скласс нужного слайдера
+  // Создаем слайдер
+  const thumbsSwiper = new Swiper('.block-tarrif-thumbs', { // Указываем скласс нужного слайдера
+    observer: true,
+    observeParents: true,
+    slidesPerView: 'auto',
+    autoHeight: false,
+    speed: 800,
+  });
+  const swiper = new Swiper('.block-tarrif__slider', {
+    thumbs: {
+      swiper: thumbsSwiper
+    },
+    observer: true,
+    observeParents: true,
+    slidesPerView: 1,
+    spaceBetween: 10,
+    speed: 800,
+    navigation: {
+      prevEl: '.block-tarrif__arrow-prev',
+      nextEl: '.block-tarrif__arrow-next',
+    },
+  });
+};
+
 //========================================================================================================================================================
 
 //До-после
@@ -1387,6 +1398,7 @@ class BeforeAfter {
       swiper: null
     };
     this.config = Object.assign(defaultConfig, props);
+    this.isDragging = false;
 
     if (this.config.init) {
       const beforeAfterItems = document.querySelectorAll('[data-ba]');
@@ -1397,7 +1409,7 @@ class BeforeAfter {
   }
 
   beforeAfterInit(beforeAfterItems) {
-    beforeAfterItems.forEach(beforeAfter => {
+    beforeAfterItems.forEach((beforeAfter, index) => {
       if (beforeAfter) {
         this.beforeAfterClasses(beforeAfter);
         this.beforeAfterItemInit(beforeAfter);
@@ -1408,7 +1420,9 @@ class BeforeAfter {
   beforeAfterClasses(beforeAfter) {
     beforeAfter.addEventListener('mouseover', function (e) {
       const targetElement = e.target;
-      if (!targetElement.closest('[data-ba-arrow]')) {
+      const isArrow = targetElement.closest('[data-ba-arrow]');
+
+      if (!isArrow) {
         if (targetElement.closest('[data-ba-before]')) {
           beforeAfter.classList.remove('_right');
           beforeAfter.classList.add('_left');
@@ -1429,79 +1443,160 @@ class BeforeAfter {
     const beforeAfterArrow = beforeAfter.querySelector('[data-ba-arrow]');
     const afterItem = beforeAfter.querySelector('[data-ba-after]');
 
-    if (!beforeAfterArrow || !afterItem) return;
+    if (!beforeAfterArrow || !afterItem) {
+      return;
+    }
 
     const beforeAfterArrowWidth = parseFloat(
       window.getComputedStyle(beforeAfterArrow).getPropertyValue('width')
     );
 
-    const handler = isMobile.any() ? 'touchstart' : 'mousedown';
-    beforeAfterArrow.addEventListener(handler, (e) => {
+    const handleStart = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       this.handleDragStart(e, beforeAfter, afterItem, beforeAfterArrowWidth);
-    });
+    };
+
+    beforeAfterArrow.addEventListener('mousedown', handleStart);
+    beforeAfterArrow.addEventListener('touchstart', handleStart, { passive: false });
   }
 
   handleDragStart(e, beforeAfter, afterItem, arrowWidth) {
     e.preventDefault();
     e.stopPropagation();
+    this.isDragging = true;
 
     const swiperInstance = this.config.swiper;
 
     if (swiperInstance && typeof swiperInstance === 'object') {
       swiperInstance.allowTouchMove = false;
+      swiperInstance.allowSlideNext = false;
+      swiperInstance.allowSlidePrev = false;
+      swiperInstance.touchEventsData.preventDefault = true;
     }
+
+    document.body.style.userSelect = 'none';
+    document.body.style.webkitUserSelect = 'none';
 
     const sizes = {
       width: beforeAfter.offsetWidth,
-      left: beforeAfter.getBoundingClientRect().left - scrollX
+      left: beforeAfter.getBoundingClientRect().left - window.scrollX
     };
 
     const moveHandler = (eMove) => {
+      if (!this.isDragging) return;
+      eMove.preventDefault();
+      eMove.stopPropagation();
       this.handleMouseMove(eMove, beforeAfter, afterItem, arrowWidth, sizes);
     };
 
-    const endHandler = () => {
-      document.removeEventListener(isMobile.any() ? 'touchmove' : 'mousemove', moveHandler);
+    const endHandler = (eEnd) => {
+      if (!this.isDragging) return;
+
+      eEnd.preventDefault();
+      eEnd.stopPropagation();
+
+      this.isDragging = false;
+
+      document.removeEventListener('mousemove', moveHandler);
+      document.removeEventListener('touchmove', moveHandler);
+      document.removeEventListener('mouseup', endHandler);
+      document.removeEventListener('touchend', endHandler);
+      document.removeEventListener('touchcancel', endHandler);
+
+      document.body.style.userSelect = '';
+      document.body.style.webkitUserSelect = '';
+
       if (swiperInstance && typeof swiperInstance === 'object') {
-        swiperInstance.allowTouchMove = true;
+        setTimeout(() => {
+          swiperInstance.allowTouchMove = true;
+          swiperInstance.allowSlideNext = true;
+          swiperInstance.allowSlidePrev = true;
+          swiperInstance.touchEventsData.preventDefault = false;
+        }, 50);
       }
     };
 
-    if (isMobile.any()) {
-      document.addEventListener('touchmove', moveHandler);
-      document.addEventListener('touchend', endHandler, { once: true });
-    } else {
-      document.addEventListener('mousemove', moveHandler);
-      document.addEventListener('mouseup', endHandler, { once: true });
-    }
+    document.addEventListener('mousemove', moveHandler);
+    document.addEventListener('mouseup', endHandler);
+    document.addEventListener('touchmove', moveHandler, { passive: false });
+    document.addEventListener('touchend', endHandler);
+    document.addEventListener('touchcancel', endHandler);
 
     document.addEventListener('dragstart', (eDrag) => {
       eDrag.preventDefault();
-    }, { once: true });
+    });
   }
 
   handleMouseMove(e, beforeAfter, afterItem, arrowWidth, sizes) {
-    const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-    const posLeft = clientX - sizes.left;
-
-    if (posLeft >= 0 && posLeft <= sizes.width) {
-      const way = (posLeft / sizes.width) * 100;
-      const arrowLeft = `calc(${way}% - ${arrowWidth}px)`;
-
-      beforeAfter.querySelector('[data-ba-arrow]').style.cssText =
-        `left:${arrowLeft}; transform: translate(50%, -50%);`;
-      afterItem.style.cssText = `width: ${100 - way}%`;
-    } else if (posLeft < 0) {
-      beforeAfter.querySelector('[data-ba-arrow]').style.cssText = `left: 0%`;
-      afterItem.style.cssText = `width: 100%`;
-    } else if (posLeft > sizes.width) {
-      beforeAfter.querySelector('[data-ba-arrow]').style.cssText =
-        `left: calc(100% - ${arrowWidth}px)`;
-      afterItem.style.cssText = `width: 0%`;
+    let clientX;
+    if (e.type === 'touchmove' && e.touches && e.touches[0]) {
+      clientX = e.touches[0].clientX;
+    } else if (e.clientX) {
+      clientX = e.clientX;
+    } else {
+      return;
     }
+
+    let posLeft = clientX - sizes.left;
+    posLeft = Math.max(0, Math.min(posLeft, sizes.width));
+
+    const way = (posLeft / sizes.width) * 100;
+    const arrowLeft = `calc(${way}% - ${arrowWidth}px)`;
+
+    const arrow = beforeAfter.querySelector('[data-ba-arrow]');
+    if (arrow) {
+      arrow.style.left = arrowLeft;
+      arrow.style.transform = 'translate(50%, -50%)';
+    }
+    afterItem.style.width = `${100 - way}%`;
   }
 }
-modules_flsModules.ba = new BeforeAfter({});
+
+let swiperBeforeAfter = null;
+
+const sliderContainer = document.querySelector('.block-before-after__slider');
+
+if (sliderContainer) {
+  swiperBeforeAfter = new Swiper('.block-before-after__slider', {
+    observer: true,
+    observeParents: true,
+    slidesPerView: 1,
+    spaceBetween: 10,
+    speed: 400,
+    touchStartPreventDefault: false,
+    touchMoveStopPropagation: true,
+    noSwiping: true,
+    noSwipingClass: 'before-after__arrows',
+    navigation: {
+      prevEl: '.block-before-after__arrow-prev',
+      nextEl: '.block-before-after__arrow-next',
+    },
+    on: {
+      touchStart: function (event) {
+        const target = event.target;
+        if (target && target.closest) {
+          const isArrow = target.closest('[data-ba-arrow]');
+          if (isArrow) {
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+          }
+        }
+        return true;
+      }
+    }
+  });
+}
+
+if (typeof window.modules_flsModules === 'undefined') {
+  window.modules_flsModules = {};
+}
+
+window.modules_flsModules.ba = new BeforeAfter({
+  swiper: swiperBeforeAfter,
+  logging: true
+});
 
 //========================================================================================================================================================
 
