@@ -2050,6 +2050,10 @@ function tabs() {
 
       const tabTitle = el.closest('[data-tabs-title]');
       const tabsBlock = tabTitle.closest('[data-tabs]');
+
+      // Проверяем, является ли таб спойлером (на мобильном разрешении)
+      const isSpoller = tabsBlock.classList.contains('_tab-spoller');
+
       if (!tabTitle.classList.contains('_tab-active') && !tabsBlock.querySelector('._slide')) {
         // Сохраняем позицию скролла
         const scrollY = window.pageYOffset;
@@ -2060,10 +2064,19 @@ function tabs() {
         tabTitle.classList.add('_tab-active');
         setTabsStatus(tabsBlock);
 
-        // Восстанавливаем позицию скролла
-        setTimeout(() => {
+        // Если это спойлер, скроллим к заголовку
+        if (isSpoller) {
+          const headerOffset = 100; // Отступ сверху (можно настроить)
+          const elementPosition = tabTitle.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        } else {
           window.scrollTo(0, scrollY);
-        }, 0);
+        }
       }
     }
   }
