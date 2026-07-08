@@ -1263,7 +1263,7 @@
                 <img src="img/bg4.webp" alt="" class="block-forms__bg1">
                 <div class="container">
                     <div class="block-forms__content">
-                        <form action="#" class="form">
+                        <form data-dev action="#" data-popup-message="#thanks" class="form">
                             <div class="form__top">
                                 <h2 class="title2 white">
                                     Заказать Продвижение на маркетплейсах
@@ -1489,6 +1489,7 @@
         </main>
         {% include 'blocks/footer.njk' %}
     </div>
+    {% include 'blocks/popup.njk' %}
     {% include 'blocks/scripts.njk' %}
 </body>
 

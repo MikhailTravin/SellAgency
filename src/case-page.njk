@@ -749,7 +749,7 @@
                         <use xlink:href="img/sprite.svg#close"></use>
                     </svg>
                 </div>
-                <form action="#" class="form">
+                <form data-dev action="#" data-popup-message="#thanks" class="form">
                     <div class="form__top">
                         <h2 class="title2">
                             Оцените потенциал роста на маркетплейсах
@@ -843,6 +843,7 @@
             </div>
         </div>
     </div>
+    {% include 'blocks/popup.njk' %}
     {% include 'blocks/scripts.njk' %}
 </body>
 

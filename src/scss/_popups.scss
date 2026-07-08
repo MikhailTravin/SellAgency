@@ -145,3 +145,12 @@ body::after {
         width: fit-content;
     }
 }
+
+.popup-thanks {
+    .form__top {
+        p {
+            color: var(--141e1f);
+            text-align: center;
+        }
+    }
+}

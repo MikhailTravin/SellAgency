@@ -152,7 +152,7 @@
                 <img src="img/bg4.webp" alt="" class="block-forms__bg1">
                 <div class="container">
                     <div class="block-forms__content">
-                        <form action="#" class="form">
+                        <form data-dev action="#" data-popup-message="#thanks" class="form">
                             <div class="form__top">
                                 <h2 class="title2 white">
                                     Остались вопросы?
@@ -219,6 +219,7 @@
         </main>
         {% include 'blocks/footer.njk' %}
     </div>
+    {% include 'blocks/popup.njk' %}
     <script
         src="https://api-maps.yandex.ru/2.1/?apikey=211aedb8-7658-4cd6-bcc1-134fbf4daa05&lang=ru_RU&_v=20240623012845"></script>
     {% include 'blocks/scripts.njk' %}
