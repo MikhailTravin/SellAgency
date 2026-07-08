@@ -2008,6 +2008,10 @@ function tabs() {
       const isHash = tabsBlock.hasAttribute('data-tabs-hash');
       tabsContent = Array.from(tabsContent).filter(item => item.closest('[data-tabs]') === tabsBlock);
       tabsTitles = Array.from(tabsTitles).filter(item => item.closest('[data-tabs]') === tabsBlock);
+
+      // Сохраняем текущую позицию скролла перед изменениями
+      const scrollY = window.pageYOffset;
+
       tabsContent.forEach((tabsContentItem, index) => {
         if (tabsTitles[index].classList.contains('_tab-active')) {
           if (tabsBlockAnimate) {
@@ -2026,22 +2030,41 @@ function tabs() {
           }
         }
       });
+
+      // Восстанавливаем позицию скролла после всех изменений
+      if (tabsBlockAnimate) {
+        setTimeout(() => {
+          window.scrollTo(0, scrollY);
+        }, tabsBlockAnimate + 50);
+      } else {
+        window.scrollTo(0, scrollY);
+      }
     }
   }
 
   function setTabsAction(e) {
     const el = e.target;
     if (el.closest('[data-tabs-title]')) {
+      // Предотвращаем стандартное поведение
+      e.preventDefault();
+
       const tabTitle = el.closest('[data-tabs-title]');
       const tabsBlock = tabTitle.closest('[data-tabs]');
       if (!tabTitle.classList.contains('_tab-active') && !tabsBlock.querySelector('._slide')) {
+        // Сохраняем позицию скролла
+        const scrollY = window.pageYOffset;
+
         let tabActiveTitle = tabsBlock.querySelectorAll('[data-tabs-title]._tab-active');
         tabActiveTitle = Array.from(tabActiveTitle).filter(item => item.closest('[data-tabs]') === tabsBlock);
         if (tabActiveTitle.length) tabActiveTitle[0].classList.remove('_tab-active');
         tabTitle.classList.add('_tab-active');
         setTabsStatus(tabsBlock);
+
+        // Восстанавливаем позицию скролла
+        setTimeout(() => {
+          window.scrollTo(0, scrollY);
+        }, 0);
       }
-      e.preventDefault();
     }
   }
 }
