@@ -8993,6 +8993,11 @@ a {
   gap: 50px;
 }
 @media (max-width: 1300px) {
+  .header-menu {
+    gap: 20px;
+  }
+}
+@media (max-width: 1300px) {
   .header-menu__body {
     position: absolute;
     z-index: 50;
@@ -9118,12 +9123,30 @@ a {
   }
 }
 @media (max-width: 1300px) {
-  .service-open .header-menu-services .header-menu-services__button {
+  .header-menu-services.service-open .header-menu-services__button {
     color: var(--ff755b-2-paints);
   }
-  .service-open .header-menu-services .header-menu-services__dropdown {
+  .header-menu-services.service-open .header-menu-services__dropdown {
     opacity: 1;
     pointer-events: auto;
+  }
+  .header-menu-services.service-open .icon-menu span, .header-menu-services.service-open .icon-menu::before, .header-menu-services.service-open .icon-menu::after {
+    background: var(--ff755b-2-paints);
+  }
+  .header-menu-services.service-open .icon-menu::before {
+    top: calc(50% - 1px);
+    -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+  }
+  .header-menu-services.service-open .icon-menu span {
+    width: 0;
+  }
+  .header-menu-services.service-open .icon-menu::after {
+    content: "";
+    width: 100%;
+    bottom: calc(50% - 1px);
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
   }
 }
 @media (min-width: 1301px) {
@@ -9184,24 +9207,6 @@ a {
         -ms-flex-pack: center;
             justify-content: center;
   }
-}
-.service-open .header-menu-services__button .icon-menu span, .service-open .header-menu-services__button .icon-menu::before, .service-open .header-menu-services__button .icon-menu::after {
-  background: var(--ff755b-2-paints);
-}
-.service-open .header-menu-services__button .icon-menu::before {
-  top: calc(50% - 1px);
-  -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-}
-.service-open .header-menu-services__button .icon-menu span {
-  width: 0;
-}
-.service-open .header-menu-services__button .icon-menu::after {
-  content: "";
-  width: 100%;
-  bottom: calc(50% - 1px);
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
 }
 .header-menu-services__dropdown {
   position: absolute;
@@ -9569,6 +9574,11 @@ body::after {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+}
+
+.popup-thanks .form__top p {
+  color: var(--141e1f);
+  text-align: center;
 }
 
 .noUi-target,

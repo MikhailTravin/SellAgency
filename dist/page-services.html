@@ -108,11 +108,49 @@
 										</ul>
 									</div>
 								</div>
+								<div class="header-menu-services">
+									<div class="header-menu-services__button">
+										<div class="icon-menu">
+											<span></span>
+										</div>
+										Маркетплейсы
+									</div>
+									<div class="header-menu-services__dropdown">
+										<svg class="header-menu-services__svg" width="416" height="459" viewBox="0 0 416 459" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<g filter="url(#filter0_d_183_1050)">
+												<path d="M100 118.294C100 107.248 108.954 98.2938 120 98.2938H175.67C179.534 98.2938 183.314 97.1748 186.555 95.0722L197.115 88.2216C203.736 83.9261 212.264 83.9261 218.885 88.2216L229.445 95.0722C232.686 97.1748 236.466 98.2938 240.33 98.2938H296C307.046 98.2938 316 107.248 316 118.294V323.16C316 334.205 307.046 343.16 296 343.16H120C108.954 343.16 100 334.205 100 323.16V118.294Z" fill="white" />
+											</g>
+											<defs>
+												<filter id="filter0_d_183_1050" x="0" y="0" width="416" height="458.16" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+													<feFlood flood-opacity="0" result="BackgroundImageFix" />
+													<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+													<feOffset dy="15" />
+													<feGaussianBlur stdDeviation="50" />
+													<feComposite in2="hardAlpha" operator="out" />
+													<feColorMatrix type="matrix" values="0 0 0 0 0.175773 0 0 0 0 0.264731 0 0 0 0 0.299679 0 0 0 0.3 0" />
+													<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_183_1050" />
+													<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_183_1050" result="shape" />
+												</filter>
+											</defs>
+										</svg>
+										<ul>
+											<li>
+												<a href="./">Wildberries</a>
+											</li>
+											<li>
+												<a href="./">Ozon</a>
+											</li>
+											<li>
+												<a href="./">Yandex Market</a>
+											</li>
+											<li>
+												<a href="./">Авито</a>
+											</li>
+										</ul>
+									</div>
+								</div>
 								<div class="header-menu__body">
 									<ul>
-										<li>
-											<a href="./">Маркетплейсы</a>
-										</li>
 										<li>
 											<a href="./">Тарифы</a>
 										</li>
@@ -1598,7 +1636,7 @@
 					<img src="img/bg4.webp" alt="" class="block-forms__bg1">
 					<div class="container">
 						<div class="block-forms__content">
-							<form action="#" class="form">
+							<form data-dev action="#" data-popup-message="#thanks" data-popup-message="#thanks" class="form">
 								<div class="form__top">
 									<h2 class="title2 white">
 										Получите Консультацию для вашего бизнеса
@@ -1813,7 +1851,7 @@
 							<use xlink:href="img/sprite.svg#close"></use>
 						</svg>
 					</div>
-					<form action="#" class="form">
+					<form data-dev action="#" data-popup-message="#thanks" class="form">
 						<div class="form__top">
 							<h2 class="title2">
 								Оцените потенциал роста на маркетплейсах
@@ -1914,7 +1952,7 @@
 							<use xlink:href="img/sprite.svg#close"></use>
 						</svg>
 					</div>
-					<form action="#" class="form">
+					<form data-dev action="#" data-popup-message="#thanks" class="form">
 						<div class="form__top">
 							<h2 class="title2">
 								Получить консультацию
@@ -1955,6 +1993,25 @@
 							</div>
 						</div>
 					</form>
+				</div>
+			</div>
+		</div>
+		<div id="thanks" aria-hidden="true" class="popup popup-forms popup-thanks">
+			<div class="popup__wrapper">
+				<div class="popup__content">
+					<div data-close class="popup__close">
+						<svg aria-hidden="true" width="16" height="16">
+							<use xlink:href="img/sprite.svg#close"></use>
+						</svg>
+					</div>
+					<div class="form__top">
+						<h2 class="title2">
+							Заявка отправлена
+						</h2>
+						<p>
+							Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad, distinctio.
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>

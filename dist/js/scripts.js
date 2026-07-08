@@ -2009,7 +2009,6 @@ function tabs() {
       tabsContent = Array.from(tabsContent).filter(item => item.closest('[data-tabs]') === tabsBlock);
       tabsTitles = Array.from(tabsTitles).filter(item => item.closest('[data-tabs]') === tabsBlock);
 
-      // Сохраняем текущую позицию скролла перед изменениями
       const scrollY = window.pageYOffset;
 
       tabsContent.forEach((tabsContentItem, index) => {
@@ -2031,7 +2030,6 @@ function tabs() {
         }
       });
 
-      // Восстанавливаем позицию скролла после всех изменений
       if (tabsBlockAnimate) {
         setTimeout(() => {
           window.scrollTo(0, scrollY);
@@ -2045,17 +2043,14 @@ function tabs() {
   function setTabsAction(e) {
     const el = e.target;
     if (el.closest('[data-tabs-title]')) {
-      // Предотвращаем стандартное поведение
       e.preventDefault();
 
       const tabTitle = el.closest('[data-tabs-title]');
       const tabsBlock = tabTitle.closest('[data-tabs]');
 
-      // Проверяем, является ли таб спойлером (на мобильном разрешении)
       const isSpoller = tabsBlock.classList.contains('_tab-spoller');
 
       if (!tabTitle.classList.contains('_tab-active') && !tabsBlock.querySelector('._slide')) {
-        // Сохраняем позицию скролла
         const scrollY = window.pageYOffset;
 
         let tabActiveTitle = tabsBlock.querySelectorAll('[data-tabs-title]._tab-active');
@@ -2064,9 +2059,8 @@ function tabs() {
         tabTitle.classList.add('_tab-active');
         setTabsStatus(tabsBlock);
 
-        // Если это спойлер, скроллим к заголовку
         if (isSpoller) {
-          const headerOffset = 100; // Отступ сверху (можно настроить)
+          const headerOffset = 100;
           const elementPosition = tabTitle.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -2133,25 +2127,66 @@ if (header) {
 const iconMenu = document.querySelector('.header-top__burger');
 const headerBody = document.querySelector('.header-menu__body');
 
-const iconMenu2 = document.querySelector('.header-menu-services__button');
-const headerBody2 = document.querySelector('.header-menu-services__dropdown');
+const serviceButtons = document.querySelectorAll('.header-menu-services');
 
 function closeFirstMenu() {
   document.documentElement.classList.remove("menu-open");
 }
 
-function closeSecondMenu() {
+function closeAllServices() {
+  serviceButtons.forEach(button => {
+    button.classList.remove("service-open");
+  });
   document.documentElement.classList.remove("service-open");
+}
+
+function closeService(button) {
+  button.classList.remove("service-open");
+  let hasOpenService = false;
+  serviceButtons.forEach(otherButton => {
+    if (otherButton.classList.contains("service-open")) {
+      hasOpenService = true;
+    }
+  });
+  if (!hasOpenService) {
+    document.documentElement.classList.remove("service-open");
+  }
+}
+
+function openService(button) {
+  button.classList.add("service-open");
+  document.documentElement.classList.add("service-open");
+}
+
+function toggleService(button) {
+  serviceButtons.forEach(otherButton => {
+    if (otherButton !== button) {
+      otherButton.classList.remove("service-open");
+    }
+  });
+
+  if (button.classList.contains("service-open")) {
+    button.classList.remove("service-open");
+    let hasOpenService = false;
+    serviceButtons.forEach(otherButton => {
+      if (otherButton.classList.contains("service-open")) {
+        hasOpenService = true;
+      }
+    });
+    if (!hasOpenService) {
+      document.documentElement.classList.remove("service-open");
+    }
+  } else {
+    button.classList.add("service-open");
+    document.documentElement.classList.add("service-open");
+  }
 }
 
 if (iconMenu) {
   iconMenu.addEventListener("click", function (e) {
     e.stopPropagation();
 
-    const isServiceOpen = document.documentElement.classList.contains("service-open");
-    if (isServiceOpen) {
-      closeSecondMenu();
-    }
+    closeAllServices();
 
     document.documentElement.classList.toggle("menu-open");
   });
@@ -2166,27 +2201,34 @@ if (iconMenu) {
   });
 }
 
-if (iconMenu2) {
-  iconMenu2.addEventListener("click", function (e) {
-    e.stopPropagation();
+serviceButtons.forEach((button) => {
+  if (button) {
+    button.addEventListener("click", function (e) {
+      e.stopPropagation();
 
-    const isMenuOpen = document.documentElement.classList.contains("menu-open");
-    if (isMenuOpen) {
-      closeFirstMenu();
+      if (document.documentElement.classList.contains("menu-open")) {
+        closeFirstMenu();
+      }
+
+      toggleService(this);
+    });
+  }
+});
+
+document.addEventListener('click', function (e) {
+  let isClickInsideAnyService = false;
+
+  serviceButtons.forEach(button => {
+    const dropdown = button.querySelector('.header-menu-services__dropdown');
+    if (button.contains(e.target) || (dropdown && dropdown.contains(e.target))) {
+      isClickInsideAnyService = true;
     }
-
-    document.documentElement.classList.toggle("service-open");
   });
 
-  document.addEventListener('click', function (e) {
-    const isClickInsideHeaderBody = headerBody2 && headerBody2.contains(e.target);
-    const isClickOnMenuIcon = e.target === iconMenu2 || iconMenu2.contains(e.target);
-
-    if (!isClickInsideHeaderBody && !isClickOnMenuIcon) {
-      closeSecondMenu();
-    }
-  });
-}
+  if (!isClickInsideAnyService) {
+    closeAllServices();
+  }
+});
 
 //========================================================================================================================================================
 
