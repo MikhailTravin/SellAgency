@@ -2244,6 +2244,15 @@ function rangeInit() {
 
     const startValue = minValue + Math.floor((maxValue - minValue) / 2);
 
+    const form = ratingFilter.closest('form');
+    let hiddenInput = form.querySelector('input[name="rating_value"]');
+    if (!hiddenInput) {
+      hiddenInput = document.createElement('input');
+      hiddenInput.type = 'hidden';
+      hiddenInput.name = 'rating_value';
+      form.appendChild(hiddenInput);
+    }
+
     noUiSlider.create(ratingFilter, {
       start: [startValue],
       connect: [true, false],
@@ -2255,15 +2264,25 @@ function rangeInit() {
       format: wNumb({
         decimals: 0,
         thousand: ' ',
-        suffix: ' ₽'
+        suffix: ' шт.'
       })
     });
 
-    // Обновляем левое значение при движении
-    /*
+    // Обновляем скрытое поле при изменении значения
     ratingFilter.noUiSlider.on('update', function (values) {
-      minValueSpan.textContent = values[0];
-    });*/
+      const numericValue = parseInt(values[0].replace(/[^\d]/g, ''));
+      hiddenInput.value = numericValue;
+
+      // Также обновляем отображение минимального значения (если нужно)
+      /*
+      if (minValueSpan) {
+        minValueSpan.textContent = values[0];
+      }
+      */
+    });
+
+    const initialValue = ratingFilter.noUiSlider.get();
+    hiddenInput.value = parseInt(initialValue[0].replace(/[^\d]/g, ''));
   }
 }
 
