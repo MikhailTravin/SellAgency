@@ -608,7 +608,7 @@ $starActive: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZp
     position: relative;
     z-index: 30;
     &._select-open {
-        z-index: 35;
+        z-index: 35 !important;
     }
     // .select__body
     &__body {
