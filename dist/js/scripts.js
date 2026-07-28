@@ -189,40 +189,81 @@ function showMore() {
     }
     function initItem(showMoreBlock, matchMedia = false) {
       showMoreBlock = matchMedia ? showMoreBlock.item : showMoreBlock;
+
+      if (!showMoreBlock || !(showMoreBlock instanceof Element)) {
+        console.warn('Invalid showMoreBlock element');
+        return;
+      }
+
       let showMoreContent = showMoreBlock.querySelectorAll('[data-showmore-content]');
       let showMoreButton = showMoreBlock.querySelectorAll('[data-showmore-button]');
       showMoreContent = Array.from(showMoreContent).filter(item => item.closest('[data-showmore]') === showMoreBlock)[0];
       showMoreButton = Array.from(showMoreButton).filter(item => item.closest('[data-showmore]') === showMoreBlock)[0];
+
+      if (!showMoreContent || !(showMoreContent instanceof Element)) {
+        console.warn('No showMoreContent found');
+        return;
+      }
+
       const hiddenHeight = getHeight(showMoreBlock, showMoreContent);
       if (matchMedia.matches || !matchMedia) {
         if (hiddenHeight < getOriginalHeight(showMoreContent)) {
           _slideUp(showMoreContent, 0, showMoreBlock.classList.contains('_showmore-active') ? getOriginalHeight(showMoreContent) : hiddenHeight);
-          showMoreButton.hidden = false;
+          if (showMoreButton) {
+            showMoreButton.hidden = false;
+          }
         } else {
           _slideDown(showMoreContent, 0, hiddenHeight);
-          showMoreButton.hidden = true;
+          if (showMoreButton) {
+            showMoreButton.hidden = true;
+          }
         }
       } else {
         _slideDown(showMoreContent, 0, hiddenHeight);
-        showMoreButton.hidden = true;
+        if (showMoreButton) {
+          showMoreButton.hidden = true;
+        }
       }
     }
     function getHeight(showMoreBlock, showMoreContent) {
+      if (!showMoreBlock || !showMoreContent || !(showMoreContent instanceof Element)) {
+        console.warn('Invalid elements passed to getHeight');
+        return 0;
+      }
+
       let hiddenHeight = 0;
       const showMoreType = showMoreBlock.dataset.showmore ? showMoreBlock.dataset.showmore : 'size';
-      const rowGap = parseFloat(getComputedStyle(showMoreContent).rowGap) ? parseFloat(getComputedStyle(showMoreContent).rowGap) : 0;
+
+      let rowGap = 0;
+      try {
+        const computedStyle = window.getComputedStyle(showMoreContent);
+        rowGap = computedStyle.rowGap ? parseFloat(computedStyle.rowGap) : 0;
+      } catch (error) {
+        console.warn('Error getting computed style:', error);
+        rowGap = 0;
+      }
+
       if (showMoreType === 'items') {
         const showMoreTypeValue = showMoreContent.dataset.showmoreContent ? showMoreContent.dataset.showmoreContent : 3;
         const showMoreItems = showMoreContent.children;
         for (let index = 1; index < showMoreItems.length; index++) {
           const showMoreItem = showMoreItems[index - 1];
-          const marginTop = parseFloat(getComputedStyle(showMoreItem).marginTop) ? parseFloat(getComputedStyle(showMoreItem).marginTop) : 0;
-          const marginBottom = parseFloat(getComputedStyle(showMoreItem).marginBottom) ? parseFloat(getComputedStyle(showMoreItem).marginBottom) : 0;
-          hiddenHeight += showMoreItem.offsetHeight + marginTop;
-          if (index == showMoreTypeValue) break;
-          hiddenHeight += marginBottom;
+          if (showMoreItem instanceof Element) {
+            try {
+              const computedStyle = window.getComputedStyle(showMoreItem);
+              const marginTop = computedStyle.marginTop ? parseFloat(computedStyle.marginTop) : 0;
+              const marginBottom = computedStyle.marginBottom ? parseFloat(computedStyle.marginBottom) : 0;
+              hiddenHeight += showMoreItem.offsetHeight + marginTop;
+              if (index == showMoreTypeValue) break;
+              hiddenHeight += marginBottom;
+            } catch (error) {
+              console.warn('Error processing item:', error);
+            }
+          }
         }
-        rowGap ? hiddenHeight += (showMoreTypeValue - 1) * rowGap : null;
+        if (rowGap && !isNaN(rowGap)) {
+          hiddenHeight += (showMoreTypeValue - 1) * rowGap;
+        }
       } else {
         const showMoreTypeValue = showMoreContent.dataset.showmoreContent ? showMoreContent.dataset.showmoreContent : 150;
         hiddenHeight = showMoreTypeValue;
@@ -231,15 +272,24 @@ function showMore() {
     }
 
     function getOriginalHeight(showMoreContent) {
+      if (!showMoreContent || !(showMoreContent instanceof Element)) {
+        console.warn('Invalid showMoreContent in getOriginalHeight');
+        return 0;
+      }
+
       let parentHidden;
       let hiddenHeight = showMoreContent.offsetHeight;
       showMoreContent.style.removeProperty('height');
       if (showMoreContent.closest(`[hidden]`)) {
         parentHidden = showMoreContent.closest(`[hidden]`);
-        parentHidden.hidden = false;
+        if (parentHidden) {
+          parentHidden.hidden = false;
+        }
       }
       let originalHeight = showMoreContent.offsetHeight;
-      parentHidden ? parentHidden.hidden = true : null;
+      if (parentHidden) {
+        parentHidden.hidden = true;
+      }
       showMoreContent.style.height = `${hiddenHeight}px`;
       return originalHeight;
     }
@@ -250,7 +300,17 @@ function showMore() {
         if (targetEvent.closest('[data-showmore-button]')) {
           const showMoreButton = targetEvent.closest('[data-showmore-button]');
           const showMoreBlock = showMoreButton.closest('[data-showmore]');
+
+          if (!showMoreBlock || !(showMoreBlock instanceof Element)) {
+            return;
+          }
+
           const showMoreContent = showMoreBlock.querySelector('[data-showmore-content]');
+
+          if (!showMoreContent || !(showMoreContent instanceof Element)) {
+            return;
+          }
+
           const showMoreSpeed = showMoreBlock.dataset.showmoreButton ? showMoreBlock.dataset.showmoreButton : '500';
           const hiddenHeight = getHeight(showMoreBlock, showMoreContent);
           if (!showMoreContent.classList.contains('_slide')) {
@@ -2290,4 +2350,29 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', rangeInit);
 } else {
   rangeInit();
+}
+
+//========================================================================================================================================================
+
+const buttonsTariff = document.querySelectorAll('.block-main-table__button .btn');
+
+if (buttonsTariff) {
+  buttonsTariff.forEach((button, index) => {
+    button.addEventListener('click', function (e) {
+      const titles = document.querySelectorAll('.block-main-table__titles .block-main-table__title span');
+      let tariffName = 'Тариф';
+
+      if (titles.length > index) {
+        tariffName = titles[index].textContent.trim();
+      }
+
+      const popup = document.querySelector('#tariff');
+      if (popup) {
+        const titleElement = popup.querySelector('.title2');
+        if (titleElement) {
+          titleElement.textContent = tariffName;
+        }
+      }
+    });
+  });
 }
