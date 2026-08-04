@@ -243,6 +243,47 @@ a {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    h2 {
+      font-family: var(--second-family);
+      font-weight: 700;
+      font-size: 46px;
+      line-height: 117%;
+      text-transform: uppercase;
+      background: linear-gradient(336deg, #141e1f 0%, #fff 503.85%, #141e1f 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    h3 {
+      font-family: var(--second-family);
+      font-weight: 700;
+      font-size: 30px;
+      line-height: 117%;
+      text-transform: uppercase;
+      background: linear-gradient(336deg, #141e1f 0%, #fff 503.85%, #141e1f 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    ol {
+      list-style-type: decimal !important;
+      padding-left: 20px !important;
+      li {
+        margin: 0px 0px 15px 0px;
+        gap: 24px;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 156%;
+        @media (max-width: 550px) {
+          gap: 10px;
+          font-size: 14px;
+          line-height: 130%;
+        }
+        &:last-child {
+          margin: 0px 0px 0px 0px;
+        }
+      }
+    }
     ul {
       li {
         margin: 0px 0px 15px 0px;
