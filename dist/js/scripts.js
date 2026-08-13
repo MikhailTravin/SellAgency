@@ -2376,3 +2376,26 @@ if (buttonsTariff) {
     });
   });
 }
+
+//========================================================================================================================================================
+
+const blockquotes = document.querySelectorAll('blockquote');
+
+if (blockquotes) {
+  blockquotes.forEach((blockquote) => {
+    if (!blockquote.querySelector('.blockquote-bg')) {
+      const blockquoteBg = document.createElement('div');
+      blockquoteBg.className = 'blockquote-bg';
+
+      const span = document.createElement('span');
+
+      const imgEl = document.createElement('div');
+      imgEl.className = 'blockquote-img';
+
+      blockquoteBg.appendChild(span);
+      blockquoteBg.appendChild(imgEl);
+
+      blockquote.prepend(blockquoteBg);
+    }
+  });
+}
